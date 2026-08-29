@@ -1,6 +1,5 @@
 from fastapi import FastAPI
+from app.api.routes import health
 
 app=FastAPI(title="JanaSahayi AI")
-@app.get("/health")
-def home():
-    return {"status":"healthy","services":"janashayai AI API"}
+app.include_router(health.route)
