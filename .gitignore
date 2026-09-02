@@ -5,3 +5,4 @@ __pycache__/
 .vscode/
 .env
 check_database.py
+backend/add_sample_scheme.py
