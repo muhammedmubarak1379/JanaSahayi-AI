@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int
     POSTGRES_PASSWORD: SecretStr
     POSTGRES_HOST: str = "127.0.0.1"
+    JWT_SECRET_KEY:SecretStr
+    JWT_ALGORITHM:str
+    ACCESS_TOKEN_EXPIRE_MINUTES:int
+    
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,
         env_file_encoding="utf-8",

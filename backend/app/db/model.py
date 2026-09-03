@@ -13,3 +13,11 @@ class Scheme(base):
     eligibility: Mapped[str | None] = mapped_column(Text,nullable=True,)
     is_active: Mapped[bool]=mapped_column(Boolean,default=True,server_default=true(),nullable=False,)
 
+class User(base):
+    __tablename__="user_account"
+    
+    id:Mapped[int]=mapped_column(primary_key=True,)
+    email:Mapped[str]=mapped_column(String(320),unique=True,index=True,nullable=False,)
+    hashed_password:Mapped[str]=mapped_column(String(255),nullable=False,)
+    is_active:Mapped[bool]=mapped_column(default=True,server_default=true(),nullable=False,)
+    role:Mapped[str]=mapped_column(String(20),default='citizen',server_default='citizen',nullable=False,)
