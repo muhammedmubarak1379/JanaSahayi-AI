@@ -11,7 +11,7 @@ from app.api.dependencies.auth import get_current_user
 from app.schemas.auth import TokenResponse,UserResponse,UserRegister
 
 
-router=APIRouter(prefix="/auth",tags=["authentication"],)
+router=APIRouter(prefix="/auth",tags=["Authentication"],)
 
 @router.post("/login",response_model=TokenResponse)
 def login(form_data:OAuth2PasswordRequestForm=Depends(),session:Session=Depends(get_db)):

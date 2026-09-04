@@ -7,7 +7,7 @@ from app.db.model import Scheme,User
 from app.api.dependencies.auth import require_admin
 
 
-router=APIRouter(prefix="/schemes",tags=["schemes"])
+router=APIRouter(prefix="/schemes",tags=["Schemes"])
 
 @router.get("", response_model=SchemeListResponse)
 def get_schemes(

@@ -8,7 +8,7 @@ from app.db.model import CitizenProfile,User
 from app.db.session import get_db
 from app.schemas.profile import CitizenProfileCreate,CitizenProfileResponse,CitizenProfileUpdte
 
-router=APIRouter(prefix="/profile",tags=["profile"])
+router=APIRouter(prefix="/profile",tags=["Profile"])
 
 @router.post("/me",response_model=CitizenProfileResponse,status_code=status.HTTP_201_CREATED)
 def create_my_profile(profile_data:CitizenProfileCreate, current_user:User=Depends(get_current_user), session:Session=Depends(get_db)):
