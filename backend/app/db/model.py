@@ -1,5 +1,8 @@
-from sqlalchemy import String,Text,Boolean,true
+from sqlalchemy import String,Text,Boolean,true,Date,ForeignKey,Numeric
 from sqlalchemy.orm import DeclarativeBase,Mapped,mapped_column
+from datetime import date
+from decimal import Decimal
+
 
 class base(DeclarativeBase):
     pass
@@ -21,3 +24,13 @@ class User(base):
     hashed_password:Mapped[str]=mapped_column(String(255),nullable=False,)
     is_active:Mapped[bool]=mapped_column(default=True,server_default=true(),nullable=False,)
     role:Mapped[str]=mapped_column(String(20),default='citizen',server_default='citizen',nullable=False,)
+
+class CitizenProfile(base):
+    __tablename__="citizen_profile"
+    id:Mapped[int]=mapped_column(primary_key=True)
+    user_id:Mapped[int]=mapped_column(ForeignKey("user_account.id",ondelete="CASCADE"),index=True,unique=True,nullable=False)
+    full_name:Mapped[str]=mapped_column(String(150),nullable=False)
+    date_of_birth:Mapped[date]=mapped_column(Date,nullable=False)
+    district:Mapped[str]=mapped_column(String(100),nullable=False)
+    occupation:Mapped[str]=mapped_column(String(100),nullable=False)
+    annual_income:Mapped[Decimal]=mapped_column(Numeric(12,2),nullable=False)
