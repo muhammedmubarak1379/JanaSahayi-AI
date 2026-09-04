@@ -3,7 +3,8 @@ from app.schemas.schemas import SchemaResponse,SchemeCreate,SchemeUpdate,SchemeL
 from sqlalchemy import select,func,or_
 from sqlalchemy.orm import Session
 from app.db.session import get_db
-from app.db.model import Scheme
+from app.db.model import Scheme,User
+from app.api.dependencies.auth import require_admin
 
 
 router=APIRouter(prefix="/schemes",tags=["schemes"])
@@ -51,7 +52,7 @@ def get_scheme(scheme_id:int,session:Session=Depends(get_db)):
     return scheme
 
 @router.post("",response_model=SchemaResponse,status_code=201)
-def create_schema(scheme_data:SchemeCreate,session:Session=Depends(get_db)):
+def create_schema(scheme_data:SchemeCreate,session:Session=Depends(get_db),admin:User=Depends(require_admin),):
         new_scheme=Scheme(
             name=scheme_data.name,
             department=scheme_data.department,
@@ -65,7 +66,7 @@ def create_schema(scheme_data:SchemeCreate,session:Session=Depends(get_db)):
         return new_scheme
 
 @router.put("/{scheme_id}",response_model=SchemaResponse)
-def update_schema(scheme_id:int,scheme_data:SchemeUpdate,session: Session=Depends(get_db)):
+def update_schema(scheme_id:int,scheme_data:SchemeUpdate,session: Session=Depends(get_db),admin:User=Depends(require_admin)):
         scheme=session.get(Scheme,scheme_id)
 
         if scheme is None:
@@ -80,7 +81,7 @@ def update_schema(scheme_id:int,scheme_data:SchemeUpdate,session: Session=Depend
         return scheme
 
 @router.delete("/{scheme_id}",status_code=204)
-def delete_scheme(scheme_id:int,session:Session=Depends(get_db)):
+def delete_scheme(scheme_id:int,session:Session=Depends(get_db),admin:User=Depends(require_admin),):
         scheme=session.get(Scheme,scheme_id)
         
         if scheme is None:
