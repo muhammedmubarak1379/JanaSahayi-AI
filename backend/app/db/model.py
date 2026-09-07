@@ -1,4 +1,4 @@
-from sqlalchemy import String,Text,Boolean,true,Date,ForeignKey,Numeric,CheckConstraint
+from sqlalchemy import Boolean,CheckConstraint,Date,DateTime,ForeignKey,Numeric,String,Text,UniqueConstraint,func, true
 from sqlalchemy.orm import DeclarativeBase,Mapped,mapped_column
 from datetime import date
 from decimal import Decimal
@@ -55,3 +55,15 @@ class SchemeEligibilityRule(base):
     maximum_annual_income:Mapped[Decimal|None]=mapped_column(Numeric(12,2),nullable=True)
     required_district:Mapped[str|None]=mapped_column(String(100),nullable=True)
     required_occupation:Mapped[str|None]=mapped_column(String(100),nullable=True)
+
+class SchemeApplication(base):
+    __tablename__="scheme_application"
+    
+    __table_args__=(UniqueConstraint("user_id","scheme_id",name="uq-scheme_application_user_scheme"),
+                    CheckConstraint( "status IN ('pending', 'approved', 'rejected')",name="ck_scheme_application_valid_status",))
+    
+    id: Mapped[int]=mapped_column(primary_key=True)
+    user_id:Mapped[int]=mapped_column(ForeignKey("user_account.id",ondelete="CASCADE"), index=True,nullable=False)
+    scheme_id:Mapped[int]=mapped_column(ForeignKey("scheme.id",ondelete="CASCADE"), index=True,nullable=False)
+    status:Mapped[str]=mapped_column(String(20),default="pending",server_default="pending",nullable=False)
+    created_at:Mapped[DateTime]=mapped_column(DateTime(timezone=True),server_default=func.now(), nullable=False)
