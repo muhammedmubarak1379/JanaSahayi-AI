@@ -21,5 +21,8 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
         hide_input_in_errors=True,)
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    EMBEDDING_MODEL: str = "bge-m3"
+    EMBEDDING_DIMENSION: int = 1024
 
 settings = Settings()

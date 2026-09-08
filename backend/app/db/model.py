@@ -2,7 +2,8 @@ from sqlalchemy import Boolean,CheckConstraint,Date,DateTime,ForeignKey,Numeric,
 from sqlalchemy.orm import DeclarativeBase,Mapped,mapped_column
 from datetime import date
 from decimal import Decimal
-
+from sqlalchemy import UniqueConstraint
+from pgvector.sqlalchemy import Vector
 
 class base(DeclarativeBase):
     pass
@@ -67,3 +68,25 @@ class SchemeApplication(base):
     scheme_id:Mapped[int]=mapped_column(ForeignKey("scheme.id",ondelete="CASCADE"), index=True,nullable=False)
     status:Mapped[str]=mapped_column(String(20),default="pending",server_default="pending",nullable=False)
     created_at:Mapped[DateTime]=mapped_column(DateTime(timezone=True),server_default=func.now(), nullable=False)
+
+class SchemeDocument(base):
+    __tablename__="scheme_document"
+
+    id:Mapped[int]=mapped_column(primary_key=True)
+    scheme_id:Mapped[int]=mapped_column(ForeignKey("scheme.id",ondelete="CASCADE"),index=True,nullable=False)
+    title:Mapped[str]=mapped_column(String(300),nullable=False)
+    source_url:Mapped[str|None]=mapped_column(String(1000),nullable=True)
+    content:Mapped[str]=mapped_column(Text,nullable=False)
+    is_active:Mapped[bool]=mapped_column(Boolean,default=True,server_default=true(),nullable=False)
+    created_at:Mapped[DateTime]=mapped_column(DateTime(timezone=True),server_default=func.now(),nullable=False)
+
+class SchemeChunk(base):
+    __tablename__="scheme_chunk"
+
+    __table_args__=(UniqueConstraint("document_id","chunk_index",name="uq_scheme_chunk_document_position"),)
+
+    id:Mapped[int]=mapped_column(primary_key=True)
+    document_id:Mapped[int]=mapped_column(ForeignKey("scheme_document.id",ondelete="CASCADE"),index=True,nullable=False)
+    chunk_index:Mapped[int]=mapped_column(nullable=False)
+    content:Mapped[str]=mapped_column(Text,nullable=False)
+    embedding:Mapped[list[float]]=mapped_column(Vector(1024),nullable=False)
