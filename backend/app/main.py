@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.routes import health,schemas,profile,eligibility,matching,applications,documents
+from app.api.routes import health,schemas,profile,eligibility,matching,applications,documents,search
 from app.api.routes.auth import router as auth_route
 
 
@@ -12,3 +12,4 @@ app.include_router(eligibility.router)
 app.include_router(matching.router)
 app.include_router(applications.router)
 app.include_router(documents.router)
+app.include_router(search.router)
