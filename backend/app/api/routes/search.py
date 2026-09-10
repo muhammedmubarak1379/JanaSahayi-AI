@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.schemas.search import SemanticSearchResponse
 from app.services.retrieval import search_similar_chunks
+from app.schemas.rag import KnowledgeQuestion,KnowledgeAnswerResponse
+from app.services.generation import generate_answer
 
 
 router=APIRouter(prefix="/knowledge",tags=["Knowledge Search"])
@@ -33,5 +35,30 @@ def sementic_search(question:str=Query(min_length=1),limit:int=Query(default=4,g
     return{ "question": clean_qusetion,
          "results": results,}
 
+@router.post("/ask",response_model=KnowledgeAnswerResponse,)
+def ask_question(question_data:KnowledgeQuestion,session:Session=Depends(get_db),):
+    rows=search_similar_chunks(session,question_data.question,limit=3,)
+    if not rows:
+        return {
+            "question": question_data.question,
+            "answer": "The available information is insufficient.",
+            "sources": [],
+        }
 
- 
+    best_chunk,best_document,best_scheme, best_distance = rows[0]
+    if float(best_distance)>0.45:
+        return {
+            "question": question_data.question,
+            "answer": "The available information is insufficient.",
+            "sources": [],
+        }
+
+    contexts=[best_chunk.content]
+    answer= generate_answer(question_data.question,contexts,)
+    sources=[{"scheme_name": best_scheme.name,"source_url": best_document.source_url,}]
+
+    return {
+        "question": question_data.question,
+        "answer": answer,
+        "sources": sources,
+    }

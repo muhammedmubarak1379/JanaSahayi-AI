@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     JWT_SECRET_KEY:SecretStr
     JWT_ALGORITHM:str
     ACCESS_TOKEN_EXPIRE_MINUTES:int
+    LLM_MODEL: str = "qwen3:4b"
     
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,
