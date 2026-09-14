@@ -22,12 +22,19 @@ function Navbar() {
         <Link to="/">Home</Link>
         <a href="/#schemes">Schemes</a>
         <a href="/#assistant">AI Assistant</a>
+
+        {user && (
+          <Link to="/profile">My Profile</Link>
+        )}
+
         <a href="/#applications">My Applications</a>
       </nav>
 
       <div className="nav-actions">
         {isAuthLoading && (
-          <span className="auth-status">Checking account...</span>
+          <span className="auth-status">
+            Checking account...
+          </span>
         )}
 
         {!isAuthLoading && !user && (

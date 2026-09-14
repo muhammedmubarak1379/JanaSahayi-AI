@@ -96,3 +96,79 @@ export async function getCurrentUser(token) {
 
   return response.json()
 }
+export async function getMyProfile() {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/profile/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (response.status === 404) {
+    return null
+  }
+
+  if (!response.ok) {
+    throw new Error("Unable to load profile")
+  }
+
+  return response.json()
+}
+
+export async function createMyProfile(profileData) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/profile/me`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(profileData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail ||
+      "Unable to create profile"
+    )
+  }
+
+  return response.json()
+}
+
+export async function updateMyProfile(profileData) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/profile/me`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(profileData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail ||
+      "Unable to update profile"
+    )
+  }
+
+  return response.json()
+}
