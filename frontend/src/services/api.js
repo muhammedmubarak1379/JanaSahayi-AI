@@ -11,3 +11,23 @@ export async function getSchemes() {
 
   return response.json()
 }
+export async function askKnowledgeQuestion(question) {
+  const response = await fetch(
+    `${API_BASE_URL}/knowledge/ask`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question: question,
+      }),
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to get an answer")
+  }
+
+  return response.json()
+}
