@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router"
+import { useAuth } from "../context/AuthContext"
 import { loginUser } from "../services/api"
 import "./AuthPage.css"
 
@@ -10,6 +11,7 @@ function LoginPage() {
   const [error, setError] = useState("")
 
   const navigate = useNavigate()
+  const { signIn } = useAuth()
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -23,10 +25,7 @@ function LoginPage() {
         password
       )
 
-      sessionStorage.setItem(
-        "access_token",
-        data.access_token
-      )
+      await signIn(data.access_token)
 
       navigate("/")
     } catch {

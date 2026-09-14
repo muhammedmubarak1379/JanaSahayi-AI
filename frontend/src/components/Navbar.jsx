@@ -1,7 +1,16 @@
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
+import { useAuth } from "../context/AuthContext"
 import "./Navbar.css"
 
 function Navbar() {
+  const { user, isAuthLoading, signOut } = useAuth()
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    signOut()
+    navigate("/")
+  }
+
   return (
     <header className="navbar">
       <Link className="brand" to="/">
@@ -17,13 +26,35 @@ function Navbar() {
       </nav>
 
       <div className="nav-actions">
-        <Link className="login-button" to="/login">
-          Log in
-        </Link>
+        {isAuthLoading && (
+          <span className="auth-status">Checking account...</span>
+        )}
 
-        <Link className="account-button" to="/register">
-          Create account
-        </Link>
+        {!isAuthLoading && !user && (
+          <>
+            <Link className="login-button" to="/login">
+              Log in
+            </Link>
+
+            <Link className="account-button" to="/register">
+              Create account
+            </Link>
+          </>
+        )}
+
+        {!isAuthLoading && user && (
+          <>
+            <span className="user-email">{user.email}</span>
+
+            <button
+              className="logout-button"
+              type="button"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          </>
+        )}
       </div>
     </header>
   )

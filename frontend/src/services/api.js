@@ -80,3 +80,19 @@ export async function registerUser(email, password) {
 
   return response.json()
 }
+export async function getCurrentUser(token) {
+  const response = await fetch(
+    `${API_BASE_URL}/auth/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to load current user")
+  }
+
+  return response.json()
+}

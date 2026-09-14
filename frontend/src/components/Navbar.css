@@ -102,3 +102,30 @@
     padding: 10px 14px;
   }
 }
+.auth-status,
+.user-email {
+  color: #526475;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-email {
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logout-button {
+  padding: 12px 20px;
+  color: #ffffff;
+  background-color: #0f766e;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #0b5f59;
+}
