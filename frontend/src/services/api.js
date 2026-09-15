@@ -172,3 +172,84 @@ export async function updateMyProfile(profileData) {
 
   return response.json()
 }
+
+export async function getSchemeById(schemeId) {
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}`
+  )
+
+  if (response.status === 404) {
+    return null
+  }
+
+  if (!response.ok) {
+    throw new Error("Unable to load scheme")
+  }
+
+  return response.json()
+}
+
+export async function getEligibilityRule(schemeId) {
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}/eligibility-rule`
+  )
+
+  if (response.status === 404) {
+    return null
+  }
+
+  if (!response.ok) {
+    throw new Error("Unable to load eligibility rules")
+  }
+
+  return response.json()
+}
+
+export async function checkMyEligibility(schemeId) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/matching/schemes/${schemeId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail ||
+      "Unable to check eligibility"
+    )
+  }
+
+  return response.json()
+}
+
+export async function applyForScheme(schemeId) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/applications/schemes/${schemeId}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail ||
+      "Unable to submit application"
+    )
+  }
+
+  return response.json()
+}

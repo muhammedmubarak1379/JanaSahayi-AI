@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router"
 import { getSchemes } from "../services/api"
 import "./SchemesSection.css"
 
@@ -26,7 +27,10 @@ function SchemesSection() {
     <section className="schemes-section" id="schemes">
       <div className="section-heading">
         <div>
-          <p className="section-label">Opportunities for you</p>
+          <p className="section-label">
+            Opportunities for you
+          </p>
+
           <h2>Support schemes</h2>
         </div>
 
@@ -36,7 +40,9 @@ function SchemesSection() {
       </div>
 
       {isLoading && (
-        <p className="section-message">Loading schemes...</p>
+        <p className="section-message">
+          Loading schemes...
+        </p>
       )}
 
       {error && (
@@ -48,7 +54,10 @@ function SchemesSection() {
       {!isLoading && !error && (
         <div className="scheme-grid">
           {schemes.map((scheme) => (
-            <article className="scheme-card" key={scheme.id}>
+            <article
+              className="scheme-card"
+              key={scheme.id}
+            >
               <p className="department">
                 {scheme.department}
               </p>
@@ -59,9 +68,12 @@ function SchemesSection() {
                 {scheme.description}
               </p>
 
-              <button className="learn-more-button">
+              <Link
+                className="learn-more-button"
+                to={`/schemes/${scheme.id}`}
+              >
                 Learn more →
-              </button>
+              </Link>
             </article>
           ))}
         </div>
