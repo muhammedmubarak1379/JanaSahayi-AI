@@ -28,7 +28,16 @@ function Navbar() {
         )}
 
         {user?.role === "citizen" && (
-          <Link to="/applications">My Applications</Link>
+          <>
+            <Link to="/matches">Possible Matches</Link>
+            <Link to="/applications">My Applications</Link>
+          </>
+        )}
+
+        {user?.role === "admin" && (
+          <Link to="/admin/applications">
+            Review Applications
+          </Link>
         )}
       </nav>
 

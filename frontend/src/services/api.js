@@ -310,3 +310,77 @@ export async function getSchemeCatalog({
 
   return response.json()
 }
+export async function getMySchemeMatches() {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/matching/schemes`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      typeof errorData.detail === "string"
+        ? errorData.detail
+        : "Unable to load scheme matches"
+    )
+  }
+
+  return response.json()
+}
+export async function getAllApplications() {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/applications`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to load applications")
+  }
+
+  return response.json()
+}
+export async function updateApplicationStatus(
+  applicationId,
+  newStatus
+) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/applications/${applicationId}/status`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        status: newStatus,
+      }),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      typeof errorData.detail === "string"
+        ? errorData.detail
+        : "Unable to update application status"
+    )
+  }
+
+  return response.json()
+}

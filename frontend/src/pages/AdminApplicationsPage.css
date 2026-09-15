@@ -1,0 +1,137 @@
+.admin-applications-page {
+  min-height: calc(100vh - 76px);
+  padding: 70px 6%;
+  background-color: #f4f8f9;
+}
+
+.admin-heading {
+  margin-bottom: 36px;
+}
+
+.admin-heading > p {
+  margin: 0 0 10px;
+  color: #0f766e;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.admin-heading h1 {
+  margin: 0;
+  color: #12304a;
+  font-size: clamp(34px, 4vw, 48px);
+}
+
+.admin-heading span {
+  display: block;
+  margin-top: 12px;
+  color: #647585;
+  line-height: 1.7;
+}
+
+.admin-message {
+  max-width: 850px;
+  padding: 20px;
+  color: #526475;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.admin-error {
+  color: #b42318;
+  background-color: #fff1f0;
+}
+
+.admin-application-card {
+  max-width: 850px;
+  margin-bottom: 20px;
+  padding: 28px;
+  background-color: #ffffff;
+  border: 1px solid #dbe7e9;
+  border-radius: 18px;
+  box-shadow: 0 14px 35px rgba(18, 48, 74, 0.08);
+}
+
+.admin-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.admin-card-heading h2 {
+  margin: 0;
+  color: #12304a;
+  font-size: 22px;
+}
+
+.admin-application-card > p {
+  margin: 16px 0 0;
+  color: #526475;
+}
+
+.admin-status {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.admin-status.pending {
+  color: #8a5600;
+  background-color: #fff4d6;
+}
+
+.admin-status.approved {
+  color: #087443;
+  background-color: #ecfdf3;
+}
+
+.admin-status.rejected {
+  color: #b42318;
+  background-color: #fff1f0;
+}
+
+.admin-card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.admin-card-actions button {
+  padding: 12px 20px;
+  color: #ffffff;
+  background-color: #0f766e;
+  border: 1px solid #0f766e;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-card-actions .reject-button {
+  color: #b42318;
+  background-color: #ffffff;
+  border-color: #efc9c6;
+}
+
+.admin-card-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 620px) {
+  .admin-applications-page {
+    padding: 50px 5%;
+  }
+
+  .admin-card-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-card-actions {
+    flex-direction: column;
+  }
+}
