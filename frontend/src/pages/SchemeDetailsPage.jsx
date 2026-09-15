@@ -5,6 +5,7 @@ import {
   applyForScheme,
   checkMyEligibility,
   getEligibilityRule,
+  getMyApplications,
   getSchemeById,
 } from "../services/api"
 import "./SchemeDetailsPage.css"
@@ -15,23 +16,29 @@ function SchemeDetailsPage() {
 
   const [scheme, setScheme] = useState(null)
   const [rule, setRule] = useState(null)
-  const [eligibilityResult, setEligibilityResult] =
-    useState(null)
-
+  const [eligibilityResult, setEligibilityResult] = useState(null)
   const [application, setApplication] = useState(null)
 
   const [isLoading, setIsLoading] = useState(true)
   const [isChecking, setIsChecking] = useState(false)
   const [isApplying, setIsApplying] = useState(false)
+  const [isLoadingApplication, setIsLoadingApplication] =
+    useState(false)
 
   const [notFound, setNotFound] = useState(false)
   const [error, setError] = useState("")
   const [checkError, setCheckError] = useState("")
-  const [applicationError, setApplicationError] =
-    useState("")
+  const [applicationError, setApplicationError] = useState("")
 
   useEffect(() => {
     async function loadSchemeDetails() {
+      setIsLoading(true)
+      setNotFound(false)
+      setError("")
+      setScheme(null)
+      setRule(null)
+      setEligibilityResult(null)
+
       try {
         const schemeData = await getSchemeById(schemeId)
 
@@ -53,6 +60,49 @@ function SchemeDetailsPage() {
 
     loadSchemeDetails()
   }, [schemeId])
+
+  useEffect(() => {
+    setApplication(null)
+    setApplicationError("")
+
+    if (user?.role !== "citizen") {
+      return
+    }
+
+    let cancelled = false
+
+    async function loadExistingApplication() {
+      setIsLoadingApplication(true)
+
+      try {
+        const applications = await getMyApplications()
+
+        const existing = applications.find(
+          (item) => item.scheme_id === Number(schemeId)
+        )
+
+        if (!cancelled) {
+          setApplication(existing ?? null)
+        }
+      } catch {
+        if (!cancelled) {
+          setApplicationError(
+            "Unable to check your existing applications"
+          )
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingApplication(false)
+        }
+      }
+    }
+
+    loadExistingApplication()
+
+    return () => {
+      cancelled = true
+    }
+  }, [schemeId, user?.id, user?.role])
 
   async function handleEligibilityCheck() {
     setIsChecking(true)
@@ -156,16 +206,12 @@ function SchemeDetailsPage() {
           <div className="rule-grid">
             <div>
               <span>Minimum age</span>
-              <strong>
-                {rule.minimum_age ?? "No minimum"}
-              </strong>
+              <strong>{rule.minimum_age ?? "No minimum"}</strong>
             </div>
 
             <div>
               <span>Maximum age</span>
-              <strong>
-                {rule.maximum_age ?? "No maximum"}
-              </strong>
+              <strong>{rule.maximum_age ?? "No maximum"}</strong>
             </div>
 
             <div>
@@ -260,45 +306,65 @@ function SchemeDetailsPage() {
               </p>
             </div>
           )}
-
-          {user?.role === "citizen" && (
-            <div className="application-action">
-              <h3>Ready to apply?</h3>
-
-              <p>
-                Submit your application to the responsible
-                department.
-              </p>
-
-              <button
-                type="button"
-                onClick={handleApply}
-                disabled={isApplying || application}
-              >
-                {isApplying
-                  ? "Submitting application..."
-                  : application
-                    ? "Application submitted"
-                    : "Apply for this scheme"}
-              </button>
-
-              {application && (
-                <p className="application-success">
-                  Application submitted successfully. Current
-                  status:{" "}
-                  <strong>{application.status}</strong>
-                </p>
-              )}
-
-              {applicationError && (
-                <p className="application-error">
-                  {applicationError}
-                </p>
-              )}
-            </div>
-          )}
         </section>
       )}
+
+      <section className="eligibility-check">
+        <h2>Apply for this scheme</h2>
+
+        {!user && (
+          <p>
+            <Link to="/login">Log in</Link> to submit an
+            application.
+          </p>
+        )}
+
+        {user && user.role !== "citizen" && (
+          <p>
+            Applications are available for citizen accounts.
+          </p>
+        )}
+
+        {user?.role === "citizen" && (
+          <div className="application-action">
+            <p>
+              Submit your application to the responsible
+              department.
+            </p>
+
+            <button
+              type="button"
+              onClick={handleApply}
+              disabled={
+                isApplying ||
+                isLoadingApplication ||
+                Boolean(application)
+              }
+            >
+              {isLoadingApplication
+                ? "Checking application..."
+                : isApplying
+                  ? "Submitting application..."
+                  : application
+                    ? "Already applied"
+                    : "Apply for this scheme"}
+            </button>
+
+            {application && (
+              <p className="application-success">
+                Your application status:{" "}
+                <strong>{application.status}</strong>
+              </p>
+            )}
+
+            {applicationError && (
+              <p className="application-error">
+                {applicationError}
+              </p>
+            )}
+          </div>
+        )}
+      </section>
     </main>
   )
 }

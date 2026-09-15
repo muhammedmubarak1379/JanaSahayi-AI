@@ -253,3 +253,60 @@ export async function applyForScheme(schemeId) {
 
   return response.json()
 }
+
+export async function getMyApplications() {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/applications/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to load your applications")
+  }
+
+  return response.json()
+}
+export async function getMyApplicationsWithSchemes() {
+  const applications = await getMyApplications()
+
+  return Promise.all(
+    applications.map(async (application) => {
+      const scheme = await getSchemeById(application.scheme_id)
+
+      return {
+        ...application,
+        scheme_name: scheme?.name ?? `Scheme #${application.scheme_id}`,
+      }
+    })
+  )
+}
+export async function getSchemeCatalog({
+  q = "",
+  limit = 10,
+  offset = 0,
+} = {}) {
+  const parameters = new URLSearchParams({
+    limit: String(limit),
+    offset: String(offset),
+  })
+
+  if (q.trim()) {
+    parameters.set("q", q.trim())
+  }
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes?${parameters.toString()}`
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to load schemes")
+  }
+
+  return response.json()
+}

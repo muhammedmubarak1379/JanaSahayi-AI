@@ -1,0 +1,143 @@
+.applications-page {
+  min-height: calc(100vh - 76px);
+  padding: 70px 6%;
+  background-color: #f4f8f9;
+}
+
+.applications-heading {
+  margin-bottom: 36px;
+}
+
+.applications-heading > p {
+  margin: 0 0 10px;
+  color: #0f766e;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.applications-heading h1 {
+  margin: 0;
+  color: #12304a;
+  font-size: clamp(34px, 4vw, 48px);
+}
+
+.applications-heading span {
+  display: block;
+  margin-top: 12px;
+  color: #647585;
+  font-size: 17px;
+}
+
+.applications-message,
+.applications-empty {
+  max-width: 700px;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #dbe7e9;
+  border-radius: 18px;
+}
+
+.applications-message {
+  color: #526475;
+}
+
+.applications-error {
+  color: #b42318;
+  background-color: #fff1f0;
+}
+
+.applications-empty h2 {
+  margin: 0 0 10px;
+  color: #12304a;
+}
+
+.applications-empty p {
+  color: #647585;
+  line-height: 1.6;
+}
+
+.applications-empty a,
+.application-card a {
+  color: #0f766e;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.applications-empty a:hover,
+.application-card a:hover {
+  text-decoration: underline;
+}
+
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1000px;
+}
+
+.application-card {
+  padding: 28px;
+  background-color: #ffffff;
+  border: 1px solid #dbe7e9;
+  border-radius: 18px;
+  box-shadow: 0 14px 35px rgba(18, 48, 74, 0.08);
+}
+
+.application-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.application-card-header > span:first-child {
+  color: #647585;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  color: #8a5600;
+  background-color: #fff4d6;
+}
+
+.status-badge.approved {
+  color: #087443;
+  background-color: #ecfdf3;
+}
+
+.status-badge.rejected {
+  color: #b42318;
+  background-color: #fff1f0;
+}
+
+.application-card h2 {
+  margin: 24px 0 10px;
+  color: #12304a;
+  font-size: 23px;
+}
+
+.application-card p {
+  margin: 0 0 24px;
+  color: #647585;
+}
+
+@media (max-width: 700px) {
+  .applications-page {
+    padding: 50px 5%;
+  }
+
+  .applications-grid {
+    grid-template-columns: 1fr;
+  }
+}

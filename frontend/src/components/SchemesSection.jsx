@@ -34,9 +34,9 @@ function SchemesSection() {
           <h2>Support schemes</h2>
         </div>
 
-        <button className="view-all-button">
-          View all schemes →
-        </button>
+        <Link className="view-all-button" to="/schemes">
+        View all schemes →
+       </Link>
       </div>
 
       {isLoading && (

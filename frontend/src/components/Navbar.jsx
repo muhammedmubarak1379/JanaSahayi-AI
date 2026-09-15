@@ -20,14 +20,16 @@ function Navbar() {
 
       <nav className="nav-links">
         <Link to="/">Home</Link>
-        <a href="/#schemes">Schemes</a>
+        <Link to="/schemes">Schemes</Link>
         <a href="/#assistant">AI Assistant</a>
 
         {user && (
           <Link to="/profile">My Profile</Link>
         )}
 
-        <a href="/#applications">My Applications</a>
+        {user?.role === "citizen" && (
+          <Link to="/applications">My Applications</Link>
+        )}
       </nav>
 
       <div className="nav-actions">
