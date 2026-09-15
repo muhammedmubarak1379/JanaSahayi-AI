@@ -11,6 +11,17 @@ export async function getSchemes() {
 
   return response.json()
 }
+export async function getAdminSchemes() {
+  const response = await fetch(
+    `${API_BASE_URL}/schemes?limit=100&offset=0`
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to load schemes")
+  }
+
+  return response.json()
+}
 export async function askKnowledgeQuestion(question) {
   const response = await fetch(
     `${API_BASE_URL}/knowledge/ask`,
@@ -383,4 +394,75 @@ export async function updateApplicationStatus(
   }
 
   return response.json()
+}
+export async function createScheme(schemeData) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(schemeData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail || "Unable to create scheme"
+    )
+  }
+
+  return response.json()
+}
+export async function updateScheme(schemeId, schemeData) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(schemeData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail || "Unable to update scheme"
+    )
+  }
+
+  return response.json()
+}
+export async function deactivateScheme(schemeId) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      errorData.detail || "Unable to deactivate scheme"
+    )
+  }
 }

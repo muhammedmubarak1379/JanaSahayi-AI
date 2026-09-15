@@ -23,9 +23,7 @@ function Navbar() {
         <Link to="/schemes">Schemes</Link>
         <a href="/#assistant">AI Assistant</a>
 
-        {user && (
-          <Link to="/profile">My Profile</Link>
-        )}
+        {user && <Link to="/profile">My Profile</Link>}
 
         {user?.role === "citizen" && (
           <>
@@ -35,9 +33,12 @@ function Navbar() {
         )}
 
         {user?.role === "admin" && (
-          <Link to="/admin/applications">
-            Review Applications
-          </Link>
+          <>
+            <Link to="/admin/applications">
+              Review Applications
+            </Link>
+            <Link to="/admin/schemes">Manage Schemes</Link>
+          </>
         )}
       </nav>
 
@@ -53,7 +54,6 @@ function Navbar() {
             <Link className="login-button" to="/login">
               Log in
             </Link>
-
             <Link className="account-button" to="/register">
               Create account
             </Link>
@@ -63,7 +63,6 @@ function Navbar() {
         {!isAuthLoading && user && (
           <>
             <span className="user-email">{user.email}</span>
-
             <button
               className="logout-button"
               type="button"

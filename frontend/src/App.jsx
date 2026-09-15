@@ -13,6 +13,7 @@ import SchemesPage from "./pages/SchemesPage"
 import ApplicationsPage from "./pages/ApplicationsPage"
 import MatchesPage from "./pages/MatchesPage"
 import AdminApplicationsPage from "./pages/AdminApplicationsPage"
+import AdminSchemesPage from "./pages/AdminSchemesPage"
 
 function App() {
   return (
@@ -24,7 +25,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/schemes" element={<SchemesPage />} />
-
         <Route
           path="/schemes/:schemeId"
           element={<SchemeDetailsPage />}
@@ -62,6 +62,15 @@ function App() {
           element={
             <AdminRoute>
               <AdminApplicationsPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/schemes"
+          element={
+            <AdminRoute>
+              <AdminSchemesPage />
             </AdminRoute>
           }
         />

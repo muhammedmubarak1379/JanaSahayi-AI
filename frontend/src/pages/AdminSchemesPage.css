@@ -1,0 +1,150 @@
+.admin-schemes-page {
+  min-height: calc(100vh - 76px);
+  padding: 56px 6%;
+  background: #f6fafc;
+}
+
+.admin-schemes-page h1 {
+  margin: 0;
+  color: #12304a;
+  font-size: clamp(32px, 4vw, 48px);
+}
+
+.admin-schemes-page > p {
+  color: #526475;
+  font-size: 17px;
+}
+
+.admin-schemes-page > div {
+  margin-top: 20px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dce7ec;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(18, 48, 74, 0.06);
+}
+
+.admin-schemes-page > div h2 {
+  margin: 0 0 8px;
+  color: #12304a;
+  font-size: 22px;
+}
+
+.admin-schemes-page > div p {
+  margin: 0;
+  color: #526475;
+}
+.admin-scheme-form {
+  max-width: 760px;
+  margin: 32px 0 48px;
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #dce7ec;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(18, 48, 74, 0.06);
+}
+
+.admin-scheme-form h2 {
+  margin: 0 0 24px;
+  color: #12304a;
+}
+
+.admin-scheme-form form {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-scheme-form label {
+  margin-top: 8px;
+  color: #12304a;
+  font-weight: 600;
+}
+
+.admin-scheme-form input,
+.admin-scheme-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  color: #12304a;
+  background: #ffffff;
+  border: 1px solid #cbd9df;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.admin-scheme-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.admin-scheme-form input:focus,
+.admin-scheme-form textarea:focus {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
+}
+
+.admin-scheme-form button {
+  justify-self: start;
+  margin-top: 16px;
+  padding: 12px 22px;
+  color: #ffffff;
+  background: #0f766e;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-scheme-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.admin-scheme-form button[type="button"] {
+  margin-left: 8px;
+  color: #12304a;
+  background: #eef3f6;
+}
+
+.admin-scheme-form button[type="button"]:hover {
+  background: #dce7ec;
+}
+
+.admin-schemes-page > div > button {
+  margin-top: 16px;
+  padding: 10px 16px;
+  color: #0f766e;
+  background: #ffffff;
+  border: 1px solid #0f766e;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-schemes-page > div > button:hover {
+  background: #edf8f6;
+}
+.admin-schemes-page > div > .deactivate-button {
+  margin-left: 10px;
+  color: #a33a3a;
+  border-color: #dba7a7;
+}
+
+.admin-schemes-page > div > .deactivate-button:hover {
+  background: #fff1f1;
+}
+
+.admin-schemes-page > div > .deactivate-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.admin-schemes-page [role="alert"] {
+  color: #a33a3a;
+  font-weight: 600;
+}
+
+.admin-schemes-page [role="status"] {
+  color: #0f766e;
+  font-weight: 600;
+}
