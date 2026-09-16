@@ -1,0 +1,78 @@
+.admin-documents-page {
+  min-height: calc(100vh - 76px);
+  padding: 56px 6%;
+  background: #f6fafc;
+}
+
+.admin-documents-page h1,
+.admin-documents-page h2,
+.admin-documents-page h3 {
+  color: #12304a;
+}
+
+.admin-documents-page h1 {
+  margin: 0 0 24px;
+  font-size: clamp(32px, 4vw, 48px);
+}
+
+.admin-documents-page > a {
+  display: inline-block;
+  margin: 8px 0 24px;
+  color: #0f766e;
+  font-weight: 700;
+}
+
+.admin-documents-page article {
+  max-width: 850px;
+  margin: 18px 0;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dce7ec;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(18, 48, 74, 0.06);
+}
+
+.admin-documents-page article h3 {
+  margin-top: 0;
+}
+
+.admin-documents-page article p {
+  color: #526475;
+}
+
+.admin-documents-page article a {
+  color: #0f766e;
+  font-weight: 700;
+}
+
+.admin-documents-page article button {
+  display: block;
+  margin-top: 18px;
+  padding: 10px 16px;
+  color: #a33a3a;
+  background: #ffffff;
+  border: 1px solid #dba7a7;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-documents-page article button:hover {
+  background: #fff1f1;
+}
+
+.admin-documents-page article button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.admin-documents-page [role="alert"] {
+  color: #a33a3a;
+  font-weight: 600;
+}
+
+.admin-documents-page [role="status"] {
+  color: #0f766e;
+  font-weight: 600;
+}

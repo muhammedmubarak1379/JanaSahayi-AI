@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router"
 import {
   createScheme,
   deactivateScheme,
@@ -162,7 +163,9 @@ function AdminSchemesPage() {
             required
           />
 
-          <label htmlFor="scheme-department">Department</label>
+          <label htmlFor="scheme-department">
+            Department
+          </label>
           <input
             id="scheme-department"
             name="department"
@@ -221,6 +224,16 @@ function AdminSchemesPage() {
         <div key={scheme.id}>
           <h2>{scheme.name}</h2>
           <p>{scheme.department}</p>
+
+          <Link
+            to={`/admin/schemes/${scheme.id}/eligibility`}
+          >
+            Manage eligibility rule
+          </Link>
+
+          <Link to={`/admin/schemes/${scheme.id}/documents`}>
+            Manage documents
+          </Link>
 
           <button
             type="button"

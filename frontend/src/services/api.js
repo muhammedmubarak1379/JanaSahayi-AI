@@ -466,3 +466,141 @@ export async function deactivateScheme(schemeId) {
     )
   }
 }
+export async function createEligibilityRule(
+  schemeId,
+  ruleData
+) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}/eligibility-rule`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ruleData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      typeof errorData.detail === "string"
+        ? errorData.detail
+        : "Unable to create eligibility rule"
+    )
+  }
+
+  return response.json()
+}
+
+export async function updateEligibilityRule(
+  schemeId,
+  ruleData
+) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}/eligibility-rule`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ruleData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      typeof errorData.detail === "string"
+        ? errorData.detail
+        : "Unable to update eligibility rule"
+    )
+  }
+
+  return response.json()
+}
+
+export async function createSchemeDocument(
+  schemeId,
+  documentData
+) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}/documents`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(documentData),
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      typeof errorData.detail === "string"
+        ? errorData.detail
+        : "Unable to add scheme document"
+    )
+  }
+
+  return response.json()
+}
+
+export async function getSchemeDocuments(schemeId) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}/documents`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error("Unable to load scheme documents")
+  }
+
+  return response.json()
+}
+
+export async function deactivateSchemeDocument(
+  schemeId,
+  documentId
+) {
+  const token = sessionStorage.getItem("access_token")
+
+  const response = await fetch(
+    `${API_BASE_URL}/schemes/${schemeId}/documents/${documentId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  if (!response.ok) {
+    const errorData = await response.json()
+
+    throw new Error(
+      typeof errorData.detail === "string"
+        ? errorData.detail
+        : "Unable to deactivate document"
+    )
+  }
+}

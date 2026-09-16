@@ -14,4 +14,5 @@ class SchemeDocumentResponse(BaseModel):
     is_active:bool
     created_at:datetime
     chunk_count:int
+    source_url:str|None
     model_config=ConfigDict(from_attributes=True)

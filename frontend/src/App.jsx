@@ -8,12 +8,15 @@ import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
 import ProfilePage from "./pages/ProfilePage"
-import SchemeDetailsPage from "./pages/SchemeDetailsPage"
 import SchemesPage from "./pages/SchemesPage"
+import SchemeDetailsPage from "./pages/SchemeDetailsPage"
 import ApplicationsPage from "./pages/ApplicationsPage"
 import MatchesPage from "./pages/MatchesPage"
 import AdminApplicationsPage from "./pages/AdminApplicationsPage"
 import AdminSchemesPage from "./pages/AdminSchemesPage"
+import AdminEligibilityPage from "./pages/AdminEligibilityPage"
+import AdminDocumentPage from "./pages/AdminDocumentPage"
+import AdminDocumentsPage from "./pages/AdminDocumentsPage"
 
 function App() {
   return (
@@ -25,6 +28,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/schemes" element={<SchemesPage />} />
+
         <Route
           path="/schemes/:schemeId"
           element={<SchemeDetailsPage />}
@@ -71,6 +75,33 @@ function App() {
           element={
             <AdminRoute>
               <AdminSchemesPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/schemes/:schemeId/eligibility"
+          element={
+            <AdminRoute>
+              <AdminEligibilityPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/schemes/:schemeId/documents"
+          element={
+            <AdminRoute>
+              <AdminDocumentsPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/schemes/:schemeId/documents/new"
+          element={
+            <AdminRoute>
+              <AdminDocumentPage />
             </AdminRoute>
           }
         />
