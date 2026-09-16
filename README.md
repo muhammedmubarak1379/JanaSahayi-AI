@@ -100,6 +100,24 @@ flowchart TD
 
 A possible match is only guidance. Some official requirements—such as disability certificates, bank-account conditions, category certificates and property ownership—cannot currently be verified automatically.
 
+## Screenshots
+
+### Home Page
+
+![JanaSahayi AI home page](docs/screenshots/home-page.png)
+
+### Scheme Catalogue
+
+![JanaSahayi scheme catalogue](docs/screenshots/schemes-page.png)
+
+### Grounded AI Assistant
+
+![JanaSahayi grounded AI answer](docs/screenshots/ai-assistant.png)
+
+### Administrator Scheme Management
+
+![JanaSahayi administrator scheme management](docs/screenshots/admin-dashboard.png)
+
 ## Project Structure
 
 ```text
@@ -124,6 +142,8 @@ JanaSahayi-AI/
 │   │   └── services/
 │   ├── package.json
 │   └── vite.config.js
+├── docs/
+│   └── screenshots/
 ├── docker-compose.yml
 ├── .env
 └── README.md
@@ -135,7 +155,7 @@ The real `.env` file must remain excluded from Git.
 
 ### Prerequisites
 
-Install the following:
+Install:
 
 - Python 3.10 or later
 - Node.js and npm
@@ -143,26 +163,16 @@ Install the following:
 - Ollama
 - Git
 
-## 1. Clone the repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/muhammedmubarak1379/JanaSahayi-AI.git
 cd JanaSahayi-AI
 ```
 
-## 2. Create the root environment file
+### 2. Create the root environment file
 
 Create `.env` in the project root:
-
-```text
-JanaSahayi-AI/
-├── .env
-├── backend/
-├── frontend/
-└── README.md
-```
-
-Example configuration:
 
 ```env
 POSTGRES_DB=janasahayi_db
@@ -183,7 +193,7 @@ LLM_MODEL=qwen3:4b
 
 Never commit the real `.env` file because it contains database and authentication secrets.
 
-## 3. Start PostgreSQL
+### 3. Start PostgreSQL
 
 From the project root:
 
@@ -197,7 +207,7 @@ Verify that the database container is running:
 docker ps
 ```
 
-## 4. Configure the backend
+### 4. Configure the backend
 
 Move into the backend directory:
 
@@ -205,9 +215,7 @@ Move into the backend directory:
 cd backend
 ```
 
-Create a Python virtual environment.
-
-Windows PowerShell:
+Create a Python virtual environment:
 
 ```powershell
 py -3.10 -m venv .venv
@@ -225,7 +233,7 @@ Install backend dependencies:
 pip install -r requirements.txt
 ```
 
-## 5. Apply database migrations
+### 5. Apply database migrations
 
 From the `backend` directory:
 
@@ -233,27 +241,23 @@ From the `backend` directory:
 python -m alembic upgrade head
 ```
 
-Check that the database matches the SQLAlchemy models:
+Check migration consistency:
 
 ```bash
 python -m alembic check
 ```
 
-## 6. Install the Ollama models
-
-Pull the embedding model:
+### 6. Install the Ollama models
 
 ```bash
 ollama pull bge-m3
 ```
 
-Pull the language model:
-
 ```bash
 ollama pull qwen3:4b
 ```
 
-Verify the installed models:
+Verify the models:
 
 ```bash
 ollama list
@@ -266,7 +270,7 @@ bge-m3
 qwen3:4b
 ```
 
-## 7. Start the backend
+### 7. Start the backend
 
 From the `backend` directory:
 
@@ -292,9 +296,9 @@ Health endpoint:
 http://127.0.0.1:8000/health
 ```
 
-## 8. Configure the frontend
+### 8. Configure and start the frontend
 
-Open another terminal and move into the frontend directory:
+Open another terminal:
 
 ```bash
 cd frontend
@@ -324,7 +328,7 @@ Frontend URL:
 http://localhost:5173
 ```
 
-## 9. Create a local administrator
+### 9. Create a local administrator
 
 Register a normal account using the JanaSahayi frontend.
 
@@ -338,14 +342,14 @@ Log out and log in again so the new JWT contains the administrator role.
 
 > Do not provide direct database access to users in a production system. This command is only for local development.
 
-## 10. Add scheme information
+### 10. Add scheme information
 
 After signing in as an administrator:
 
 1. Open **Manage Schemes**.
 2. Create a scheme.
-3. Add an eligibility rule when its conditions can be represented by the available fields.
-4. Add a knowledge document containing verified scheme information.
+3. Add an eligibility rule when the conditions can be represented by the available fields.
+4. Add a knowledge document containing verified information.
 5. Include the official source URL.
 6. Test the document using the AI assistant.
 
@@ -383,7 +387,7 @@ A successful build creates the `frontend/dist` directory.
 | Knowledge | `/knowledge/ask` | Grounded AI answers |
 | Health | `/health` | Backend health check |
 
-Complete request and response documentation is available through FastAPI Swagger UI at:
+Complete API documentation is available at:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -404,7 +408,7 @@ Important database tables include:
 Relationships include:
 
 - One user can have one citizen profile.
-- One citizen can submit applications for multiple schemes.
+- One citizen can apply for multiple schemes.
 - A user cannot apply for the same scheme more than once.
 - One scheme can have one structured eligibility rule.
 - One scheme can have multiple knowledge documents.
@@ -422,7 +426,7 @@ When a citizen asks a question:
 3. The most relevant active document chunks are retrieved.
 4. A relevance threshold rejects unrelated results.
 5. Relevant content is sent to `qwen3:4b`.
-6. The generated answer is returned with the corresponding official source.
+6. The generated answer is returned with the official source.
 
 ## AI Safety Measures
 
@@ -441,12 +445,12 @@ JanaSahayi uses several controls to reduce misleading answers:
 
 - Applications are stored only inside JanaSahayi.
 - Applications are not submitted to government portals.
-- Eligibility matching supports only the fields currently available in a citizen profile.
-- JanaSahayi cannot verify uploaded certificates or official records.
+- Eligibility matching supports only the fields available in a citizen profile.
+- JanaSahayi cannot verify certificates or official records.
 - Knowledge documents must be reviewed and maintained by an administrator.
 - Scheme information may change after it has been added.
 - AI performance depends on available CPU, GPU and memory.
-- Citizens must verify current details through official government sources.
+- Citizens must verify details through official government sources.
 
 ## Future Improvements
 
@@ -463,7 +467,7 @@ JanaSahayi uses several controls to reduce misleading answers:
 
 ## Security Notes
 
-- Passwords are stored as hashes.
+- Passwords are stored as secure hashes.
 - Protected endpoints require a valid JWT access token.
 - Administrator endpoints require role-based authorization.
 - Database and JWT secrets are loaded from `.env`.
